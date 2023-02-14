@@ -1,3 +1,4 @@
+/* mudou o arquivo */
 create database diet;
 use diet;
 create table user(
