@@ -1,5 +1,12 @@
 use classicmodels;
 
+#a liste todos os emplyoess 
+select c.salesRepEmployeeNumber, p.employeeNumber, p.firstName
+from customers c
+join employees p on p.employeeNumber = c.salesRepEmployeeNumber
+join orders od on od.customerNumber = c.customerNumber
+group by p.employeeNumber,c.salesRepEmployeeNumber;
+
 # b retornando soma das compras dos usuarios 
 select c.customerNumber,c.customerName,SUM(ps.amount) as TotaldeCompras
 from customers c
@@ -8,13 +15,7 @@ join orders od on od.customerNumber = c.customerNumber
 group by c.customerNumber
 order by c.customerName;
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# b.1 simplificada porem outra opção ver correta
-select c.customerNumber,c.customerName,SUM(ot.priceEach) as TotaldeCompras
-from customers c
-join orders od on od.customerNumber = c.customerNumber
-join orderdetails ot on ot.orderNumber = od.orderNumber
-group by c.customerNumber
-order by customerName;
+
 
 
 # c) retornando media das compras dos usuarios 
@@ -25,13 +26,50 @@ join orders od on od.customerNumber = c.customerNumber
 group by c.customerNumber
 order by c.customerName;
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# c.1) simplfificada porem ver resultado
-select c.customerNumber,c.customerName,avg(ot.priceEach) as TotaldeCompras
+
+# d) retornando quantidade de funcionarios por departamento .
+
+select f.officeCode ,f.addressLine1 , count(ep.employeeNumber)as TotaldeFuncionarios
+from offices f
+join employees ep on ep.officeCode = f.officeCode
+group by  f.officeCode;
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# e) retornando vendas foram realzadas por funcionario.
+
+select c.salesRepEmployeeNumber, p.employeeNumber, p.firstName, count(od.orderNumber) as Quantidade
 from customers c
+join employees p on p.employeeNumber = c.salesRepEmployeeNumber
 join orders od on od.customerNumber = c.customerNumber
-join orderdetails ot on ot.orderNumber = od.orderNumber
-group by c.customerNumber
-order by customerName;
+group by p.employeeNumber,c.salesRepEmployeeNumber;
+
+
+
+#f) retornando os 5 produtos mais comprados
+
+
+select p.productCode,p.productName , count(ot.quantityOrdered) as Quantidade
+from products p
+join orderdetails  ot on ot.productCode = p.productCode
+group by p.productCode
+order by Quantidade desc
+limit 5;
+
+
+
+#g
+
+
+
+
+
+#
+
+
+
+
+
+
 
 
 
