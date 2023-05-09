@@ -245,6 +245,12 @@ join llicenca ll on ll.idSOFTWARE_FK_FK = ls.idSOFTWARE
 group by ls.idSOFTWARE
 order by ls.NomeSoftware;
 
+select count(l.NumLicenca) as "total licencas",s.NomeSoftware
+from llicenca l
+join lversao v on l.Versao_FK= v.Versao
+join lsoftware s on v.idSOFTWARE_FK = s.idSOFTWARE
+group by v.Versao, s.idSOFTWARE
+order by s.NomeSoftware,v.Versao;
 
 
 #exercicio x 
