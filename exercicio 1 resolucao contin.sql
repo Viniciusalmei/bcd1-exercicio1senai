@@ -261,6 +261,14 @@ join lcliente lc on ll.idCLIENTE_FK = lc.idCLIENTE
 group by ll.NumLicenca
 order by lc.Nome_RazaoSocial;
 
+select s.NomeSoftware, c.Nome_RazaoSocial as nome, count(l.NumLicenca) as "Total licenças"
+from llicenca l 
+join lcliente c on c.idCLIENTE = l.idCLIENTE_FK
+join lsoftware s on l.idSOFTWARE_FK_FK = s.idSOFTWARE
+group by c.Nome_RazaoSocial,s.idSOFTWARE 
+order by c.Nome_RazaoSocial; 
+
+
 #exercicio y
 
 select lc.idCLIENTE ,lc. Nome_RazaoSocial, count(*) NumLicenca
